@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- OCTIDECIMAL -->
+
+    <color name="black_overlay">#66000000</color>
+    <color name="red">#ffff0000</color>
+    <color name="green">#ff00ff00</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="purple">#ff9c09b6</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="orange">#fffb9000</color>
+    <color name="yellow">#ffffff00</color>
+    <color name="brown">#ff6d4004</color>
+    <color name="pink">#ffffbcc8</color>
+
+    <color name="tcorange">#fe9d34</color>
+    <color name="tcblue">#4fbdd7</color>
+    <color name="dkBlue">#aa000066</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="transWhite">#99ffffff</color>
+    <color name="transBlack">#aa000000</color>
+    <color name="medTransGrey">#55000000</color>
+    <color name="transGrey">#22000000</color>
+    <color name="transPurple">#55550055</color>
+</resources>

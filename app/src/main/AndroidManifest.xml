@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tinycircuits.tinycircuitsble" >
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/tiny_circuits_logo"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.TinyCircuits">
+
+        <activity
+            android:label="@string/app_name"
+            android:name=".ScanActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ControlActivity"
+            android:label="@string/controlActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <service
+            android:label="@string/ble_service"
+            android:name=".bluetoothservice.BluetoothLeService"
+            android:enabled="true"/>
+
+        <service
+            android:name=".notificationservice.NLService"
+            android:label="@string/notify_service"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>
