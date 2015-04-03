@@ -216,7 +216,6 @@ public class ScanActivity extends Activity {
                 }
             });
 
-            scanLeDevice(true);
 
             if (checkNotificationsEnabled()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

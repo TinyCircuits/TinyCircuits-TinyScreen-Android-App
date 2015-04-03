@@ -126,10 +126,18 @@ public class ControlActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+                Debug.Log("gatt connected event");
                 isConnected = true;
                 isBusy = false;
                 updateConnectionState();
                 invalidateOptionsMenu();
+                try {
+                    Thread.sleep(250);
+                    String currentDate = "D" + new SimpleDateFormat("yyyy MM dd k m s").format(new Date());
+                    mBluetoothLeService.sendData(currentDate);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
                 isConnected = false;
                 isBusy = false;
@@ -198,8 +206,6 @@ public class ControlActivity extends Activity {
             public void run() {
                 if(isConnected){
                     mConnectionState.setText(R.string.connected);
-                    String currentDate = "D" + new SimpleDateFormat("yyyy MM dd k m s").format(new Date());
-                    mBluetoothLeService.sendData(currentDate);
                 }else{
                     mConnectionState.setText(R.string.disconnected);
                 }
