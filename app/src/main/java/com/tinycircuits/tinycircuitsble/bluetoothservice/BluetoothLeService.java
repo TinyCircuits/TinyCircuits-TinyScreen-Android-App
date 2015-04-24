@@ -42,7 +42,7 @@ public class BluetoothLeService extends Service {
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
 
-    private final Intent notifyIntent = new Intent(BluetoothLeService.this, NLService.class);
+    private Intent notifyIntent;
 
     private Notification notification;
 
@@ -130,6 +130,8 @@ public class BluetoothLeService extends Service {
         notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         //Debug.Log("Bluetooth service started");
         //connected, start listening for notifications
+        if(notifyIntent == null)
+            notifyIntent = new Intent(BluetoothLeService.this, NLService.class);
         startService(notifyIntent);
         registerReceiver(notificationReceiver,addNotificationIntentFilter());
         return START_STICKY;
