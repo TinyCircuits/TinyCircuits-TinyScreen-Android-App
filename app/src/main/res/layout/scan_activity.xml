@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ScanActivity">
 
-    <ListView
-        android:id="@+id/deviceList"
-        android:layout_margin="5dp"
+    <!-- dynamically commit fragment here based on version number -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

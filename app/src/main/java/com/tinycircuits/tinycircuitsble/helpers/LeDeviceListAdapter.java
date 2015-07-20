@@ -83,5 +83,9 @@ public class LeDeviceListAdapter extends BaseAdapter {
 
         return view;
     }
+
+    private class ViewHolder {
+        public TextView deviceName;
+    }
 }
 

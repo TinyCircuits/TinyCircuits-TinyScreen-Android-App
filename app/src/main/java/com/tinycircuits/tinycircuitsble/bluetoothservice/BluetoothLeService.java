@@ -42,7 +42,7 @@ public class BluetoothLeService extends Service {
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
 
-    private final Intent notifyIntent = new Intent(BluetoothLeService.this, NLService.class);
+    private Intent notifyIntent;
 
     private Notification notification;
 
@@ -90,6 +90,7 @@ public class BluetoothLeService extends Service {
                 String text = intent.getStringExtra(IntentData.NOTIFICATION_DATA);
                 String sender = intent.getStringExtra(IntentData.NOTIFICATION_SENDER);
                 String title = intent.getStringExtra(IntentData.NOTIFICATION_TITLE);
+
                 if(getApplicationName(sender).equals("Messaging")){
                     String nameString = "1" + title + ":";
                     sendData(DataFormat.TrimText(nameString));
@@ -130,8 +131,9 @@ public class BluetoothLeService extends Service {
         notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         //Debug.Log("Bluetooth service started");
         //connected, start listening for notifications
+        notifyIntent = new Intent(BluetoothLeService.this, NLService.class);
         startService(notifyIntent);
-        registerReceiver(notificationReceiver,addNotificationIntentFilter());
+        registerReceiver(notificationReceiver, addNotificationIntentFilter());
         return START_STICKY;
     }
 
@@ -241,7 +243,7 @@ public class BluetoothLeService extends Service {
             .setSmallIcon(R.drawable.tiny_circuits_logo)
             .build();
 
-        notificationManager.notify(NOTIFICATION_ID,notification);
+        notificationManager.notify(NOTIFICATION_ID, notification);
         //Debug.Log("notification should be posted now: " + device.getName());
     }
 
@@ -319,12 +321,12 @@ public class BluetoothLeService extends Service {
 
     }
 
-    public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
+    public boolean writeCharacteristic(BluetoothGattCharacteristic characteristic) {
         if ( bluetoothNull() ) {
             Debug.Log("BluetoothAdapter not initialized");
-            return;
+            return false;
         }
-        mBluetoothGatt.writeCharacteristic(characteristic);
+        return mBluetoothGatt.writeCharacteristic(characteristic);
     }
 
     /**
@@ -352,6 +354,7 @@ public class BluetoothLeService extends Service {
      * @param sender what notification sent the message
      */
     public void sendData(String data) {
+
         BluetoothGattService RxService = mBluetoothGatt.getService(RX_SERVICE_UUID);
         //showMessage("mBluetoothGatt null"+ mBluetoothGatt);
         if (RxService == null) {
@@ -365,8 +368,9 @@ public class BluetoothLeService extends Service {
             broadcastUpdate(DEVICE_DOES_NOT_SUPPORT_UART);
             return;
         }
+
         RxChar.setValue(data.getBytes(Charset.forName("UTF-8")));
-        boolean status = mBluetoothGatt.writeCharacteristic(RxChar);
+        boolean status = writeCharacteristic(RxChar);
 
     }
 
